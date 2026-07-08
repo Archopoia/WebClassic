@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Order &mdash; A Treatise on Classical Web Design</title>
+<meta name="description" content="A webpage built as a classical building: order, proportion, hierarchy, rhythm, and a governing module, after the manner of Vignola." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+/* =====================================================================
+   I. THE MODULE
+   Nothing is arbitrary. One unit governs the whole composition,
+   exactly as the column diameter governs a classical building.
+   ===================================================================== */
+:root {
+  /* The governing module */
+  --module: 8px;
+
+  /* Spacing — every gap is a multiple of the module */
+  --s-1: calc(var(--module) * 1);   /*  8px */
+  --s-2: calc(var(--module) * 2);   /* 16px */
+  --s-3: calc(var(--module) * 3);   /* 24px */
+  --s-4: calc(var(--module) * 4);   /* 32px */
+  --s-6: calc(var(--module) * 6);   /* 48px */
+  --s-8: calc(var(--module) * 8);   /* 64px */
+  --s-12: calc(var(--module) * 12); /* 96px */
+  --s-16: calc(var(--module) * 16); /* 128px */
+
+  /* Typographic scale — a measured progression, not random sizes */
+  --t-caption: 0.875rem;  /* 14 — carved detail */
+  --t-body:    1.125rem;  /* 18 — the wall */
+  --t-sub:     2rem;      /* 32 — structural bay */
+  --t-head:    3rem;      /* 48 — the column */
+  --t-display: 4.5rem;    /* 72 — the pediment */
+
+  /* Proportion — the reading measure and the plan width */
+  --measure: 34rem;        /* ~66 characters per line */
+  --plan: 66rem;           /* the building footprint */
+
+  /* Materials */
+  --stone:    #f3ecdd;     /* warm parchment ground */
+  --stone-2:  #ece2ce;     /* deeper course of stone */
+  --marble:   #efe7d6;     /* pale marble panel */
+  --ink:      #29241d;     /* carved inscription */
+  --ink-soft: #5b5142;     /* weathered lettering */
+  --bronze:   #8a6a34;     /* rare, meaningful accent */
+  --bronze-2: #a9863f;
+  --line:     rgba(41, 36, 29, 0.16); /* thin engraved rule */
+  --line-strong: rgba(41, 36, 29, 0.34);
+
+  --lh-body: 1.7;
+  --lh-tight: 1.12;
+}
+
+/* =====================================================================
+   Reset — a level foundation before building
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background-color: var(--stone);
+  background-image:
+    radial-gradient(circle at 50% -10%, rgba(255,255,255,0.5), transparent 45%),
+    repeating-linear-gradient(0deg, rgba(41,36,29,0.014) 0 2px, transparent 2px 4px);
+  color: var(--ink);
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* =====================================================================
+   V. PROPORTIONAL RULES — generous margins, a central spine
+   ===================================================================== */
+.plan {
+  width: 100%;
+  max-width: var(--plan);
+  margin-inline: auto;
+  padding-inline: var(--s-4);
+}
+.measure { max-width: var(--measure); }
+.axis { margin-inline: auto; text-align: center; }
+
+/* Inscriptional lettering */
+.inscription {
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* A repeated small label — the section's "order name" */
+.eyebrow {
+  font-family: "Cinzel", serif;
+  font-size: var(--t-caption);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--bronze);
+  margin: 0 0 var(--s-2);
+}
+
+/* Thin rule ornament with a central bronze node */
+.rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  margin: var(--s-4) 0;
+}
+.rule::before, .rule::after {
+  content: "";
+  height: 1px;
+  flex: 1 1 auto;
+  max-width: var(--s-16);
+  background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+}
+.rule .node {
+  width: 7px; height: 7px;
+  transform: rotate(45deg);
+  border: 1px solid var(--bronze);
+  background: var(--stone);
+}
+
+/* =====================================================================
+   PEDIMENT + ENTABLATURE (identity & primary navigation)
+   The entrance announces itself: stable, symmetrical, dignified.
+   ===================================================================== */
+.entablature {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(243, 236, 221, 0.86);
+  backdrop-filter: saturate(1.1) blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+.entablature .plan {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: var(--s-8);
+}
+.entablature nav ul {
+  display: flex;
+  gap: var(--s-4);
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.entablature nav.left { justify-self: start; }
+.entablature nav.right { justify-self: end; }
+.entablature nav a {
+  font-family: "Cinzel", serif;
+  font-size: var(--t-caption);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.entablature nav a:hover { color: var(--ink); border-color: var(--bronze); }
+.colophon {
+  justify-self: center;
+  text-align: center;
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.2em;
+  font-size: var(--t-caption);
+  color: var(--ink);
+}
+
+/* =====================================================================
+   PORTICO (the hero) — the piazza leading into the palace
+   ===================================================================== */
+.portico {
+  position: relative;
+  padding-top: var(--s-12);
+  padding-bottom: var(--s-8);
+  overflow: hidden;
+}
+.facade { display: block; width: 100%; max-width: 720px; margin: 0 auto var(--s-6); }
+.portico h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: var(--t-display);
+  line-height: var(--lh-tight);
+  margin: 0 0 var(--s-3);
+  letter-spacing: 0.005em;
+}
+.portico h1 em { font-style: italic; color: var(--bronze); }
+.lede {
+  font-size: 1.35rem;
+  color: var(--ink-soft);
+  margin: 0 auto;
+}
+.actions {
+  display: flex;
+  gap: var(--s-3);
+  justify-content: center;
+  margin-top: var(--s-6);
+  flex-wrap: wrap;
+}
+.btn {
+  font-family: "Cinzel", serif;
+  font-size: var(--t-caption);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: var(--s-2) var(--s-4);
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.btn:hover { background: var(--ink); color: var(--stone); }
+.btn--bronze { border-color: var(--bronze); color: var(--bronze); }
+.btn--bronze:hover { background: var(--bronze); color: var(--stone); border-color: var(--bronze); }
+
+/* =====================================================================
+   MAIN HALL — principal content. Every section repeats one rhythm:
+   label -> title -> description -> detail
+   ===================================================================== */
+section { padding-block: var(--s-12); }
+.section-head { margin-bottom: var(--s-8); }
+.section-head h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: var(--t-head);
+  line-height: var(--lh-tight);
+  margin: 0 0 var(--s-2);
+}
+.section-head p { margin: 0 auto; color: var(--ink-soft); }
+
+/* The module, shown as a stack of measured courses */
+.module-figure {
+  display: grid;
+  gap: var(--s-1);
+  max-width: 30rem;
+  margin: var(--s-6) auto 0;
+}
+.course {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--marble);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--bronze);
+  padding: var(--s-1) var(--s-3);
+}
+.course b { font-family: "Cinzel", serif; font-size: var(--t-caption); letter-spacing: 0.1em; }
+.course span { color: var(--ink-soft); font-size: var(--t-caption); }
+.course .bar { height: 6px; background: var(--bronze-2); opacity: 0.5; }
+
+/* IV. THE FIVE ORDERS — rhythm through repetition (the colonnade) */
+.colonnade {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--s-3);
+  align-items: end;
+}
+.order {
+  background: var(--marble);
+  border: 1px solid var(--line);
+  padding: var(--s-4) var(--s-3) var(--s-3);
+  text-align: center;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.order:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px -18px rgba(41,36,29,0.5);
+}
+.order svg { display: block; margin: 0 auto var(--s-2); height: 132px; }
+.order h3 {
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 var(--s-1);
+}
+.order p { font-size: var(--t-caption); color: var(--ink-soft); margin: 0; line-height: 1.5; }
+
+/* XII. RESPONSIVE ORDERS — column / center / column */
+.tripartite {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: var(--s-6);
+  align-items: start;
+}
+.chamber h3 {
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 var(--s-2);
+  padding-bottom: var(--s-1);
+  border-bottom: 1px solid var(--line);
+}
+.chamber p { margin: 0 0 var(--s-2); color: var(--ink-soft); font-size: 1.05rem; }
+.chamber.center { text-align: center; }
+
+/* The building plan diagram — hierarchy from pediment to foundation */
+.blueprint {
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% var(--s-4),
+    var(--marble);
+  padding: var(--s-4);
+  max-width: 40rem;
+  margin: var(--s-6) auto 0;
+}
+.storey {
+  text-align: center;
+  padding: var(--s-2);
+  margin-bottom: var(--s-1);
+  border: 1px dashed var(--line-strong);
+  background: rgba(243,236,221,0.6);
+}
+.storey:last-child { margin-bottom: 0; }
+.storey b {
+  display: block;
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: var(--t-caption);
+}
+.storey span { font-size: var(--t-caption); color: var(--ink-soft); }
+.storey.crown { background: var(--ink); color: var(--stone); border-style: solid; }
+.storey.crown span { color: rgba(243,236,221,0.7); }
+
+/* Proportion ledger */
+.ledger {
+  list-style: none;
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  max-width: 30rem;
+  margin-inline: auto;
+}
+.ledger li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+  border-bottom: 1px solid var(--line);
+}
+.ledger li:first-child { border-top: 1px solid var(--line); }
+.ledger .ratio { font-family: "Cinzel", serif; letter-spacing: 0.08em; color: var(--bronze); }
+
+/* Alternating stone courses for section grounds */
+.ground { background: var(--stone-2); border-block: 1px solid var(--line); }
+
+/* =====================================================================
+   FOUNDATION (footer)
+   ===================================================================== */
+.foundation {
+  background: var(--ink);
+  color: var(--stone);
+  padding-block: var(--s-8);
+  text-align: center;
+}
+.foundation .inscription { font-size: var(--t-caption); letter-spacing: 0.28em; color: var(--bronze-2); }
+.foundation p { color: rgba(243,236,221,0.72); max-width: var(--measure); margin: var(--s-3) auto; }
+.foundation .rule::before, .foundation .rule::after {
+  background: linear-gradient(90deg, transparent, rgba(243,236,221,0.4), transparent);
+}
+.foundation small { color: rgba(243,236,221,0.5); font-size: var(--t-caption); letter-spacing: 0.08em; }
+
+/* Quiet, dignified entrance of the composition */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(14px); }
+  .reveal.seen { opacity: 1; transform: none; transition: opacity 700ms ease, transform 700ms ease; }
+}
+
+/* =====================================================================
+   XII. RESPONSIVE — the order remains; only the arrangement changes
+   ===================================================================== */
+@media (max-width: 60rem) {
+  :root { --t-display: 3.25rem; --t-head: 2.4rem; }
+  .colonnade { grid-template-columns: repeat(2, 1fr); }
+  .tripartite { grid-template-columns: 1fr; text-align: center; }
+  .chamber.center { order: -1; }
+  .chamber h3 { display: inline-block; }
+}
+@media (max-width: 40rem) {
+  .entablature nav.left, .entablature nav.right { display: none; }
+  .entablature .plan { grid-template-columns: 1fr; justify-items: center; }
+  .colonnade { grid-template-columns: 1fr; max-width: 20rem; margin-inline: auto; }
+  .actions { flex-direction: column; align-items: stretch; }
+  .btn { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================ ENTABLATURE / NAVIGATION ============================ -->
+<header class="entablature">
+  <div class="plan">
+    <nav class="left" aria-label="Primary">
+      <ul>
+        <li><a href="#module">Module</a></li>
+        <li><a href="#orders">Orders</a></li>
+      </ul>
+    </nav>
+    <a class="colophon" href="#top">&#8228; THE ORDER &#8228;</a>
+    <nav class="right" aria-label="Secondary">
+      <ul>
+        <li><a href="#proportion">Proportion</a></li>
+        <li><a href="#plan">The Plan</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================ PORTICO / HERO ============================ -->
+  <section class="portico">
+    <div class="plan axis">
+      <!-- Ornament that reveals structure: a temple front (pediment + colonnade + stylobate) -->
+      <svg class="facade reveal" viewBox="0 0 720 300" role="img" aria-label="A classical temple facade">
+        <defs>
+          <linearGradient id="shaft" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#e7dcc4"/>
+            <stop offset="0.5" stop-color="#f6efe0"/>
+            <stop offset="1" stop-color="#e2d6bc"/>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="#29241d" stroke-width="1.5">
+          <!-- Pediment -->
+          <polygon points="360,18 690,120 30,120" fill="#efe7d6"/>
+          <polygon points="360,44 640,120 80,120" fill="none" stroke="#8a6a34" stroke-width="1"/>
+          <circle cx="360" cy="92" r="8" fill="#8a6a34" stroke="none"/>
+          <!-- Entablature -->
+          <rect x="30" y="120" width="660" height="16" fill="#e7dcc4"/>
+          <rect x="30" y="136" width="660" height="10" fill="#efe7d6"/>
+          <!-- Colonnade: six columns -->
+          <g>
+            <!-- column template repeated -->
+            <g>
+              <rect x="70"  y="150" width="34" height="112" fill="url(#shaft)"/>
+              <rect x="184" y="150" width="34" height="112" fill="url(#shaft)"/>
+              <rect x="298" y="150" width="34" height="112" fill="url(#shaft)"/>
+              <rect x="388" y="150" width="34" height="112" fill="url(#shaft)"/>
+              <rect x="502" y="150" width="34" height="112" fill="url(#shaft)"/>
+              <rect x="616" y="150" width="34" height="112" fill="url(#shaft)"/>
+            </g>
+            <!-- capitals -->
+            <g fill="#e7dcc4">
+              <rect x="64"  y="146" width="46" height="6"/>
+              <rect x="178" y="146" width="46" height="6"/>
+              <rect x="292" y="146" width="46" height="6"/>
+              <rect x="382" y="146" width="46" height="6"/>
+              <rect x="496" y="146" width="46" height="6"/>
+              <rect x="610" y="146" width="46" height="6"/>
+            </g>
+            <!-- flutes (thin vertical rules) -->
+            <g stroke="#c9bb9c" stroke-width="0.75">
+              <line x1="81" y1="152" x2="81" y2="260"/><line x1="93" y1="152" x2="93" y2="260"/>
+              <line x1="195" y1="152" x2="195" y2="260"/><line x1="207" y1="152" x2="207" y2="260"/>
+              <line x1="309" y1="152" x2="309" y2="260"/><line x1="321" y1="152" x2="321" y2="260"/>
+              <line x1="399" y1="152" x2="399" y2="260"/><line x1="411" y1="152" x2="411" y2="260"/>
+              <line x1="513" y1="152" x2="513" y2="260"/><line x1="525" y1="152" x2="525" y2="260"/>
+              <line x1="627" y1="152" x2="627" y2="260"/><line x1="639" y1="152" x2="639" y2="260"/>
+            </g>
+          </g>
+          <!-- Stylobate / steps -->
+          <rect x="40" y="262" width="640" height="10" fill="#e7dcc4"/>
+          <rect x="20" y="272" width="680" height="12" fill="#e2d6bc"/>
+        </g>
+      </svg>
+
+      <p class="eyebrow reveal">Regola &mdash; after Vignola</p>
+      <h1 class="reveal">A page built as a<br /><em>building</em>, not a screen.</h1>
+      <p class="lede measure reveal">
+        Order before novelty. Proportion before decoration. Structure before style.
+        This is not a website that looks like a temple &mdash; it is a website that obeys
+        the same laws that make temples endure.
+      </p>
+      <div class="actions reveal">
+        <a class="btn btn--bronze" href="#module">Enter the Colonnade</a>
+        <a class="btn" href="#plan">Read the Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ I. THE MODULE ============================ -->
+  <section id="module" class="ground">
+    <div class="plan">
+      <div class="section-head axis measure reveal">
+        <p class="eyebrow">I &middot; The Module</p>
+        <h2>Everything begins with one unit</h2>
+        <p>As the column diameter governs a building, a single module of <b>8&nbsp;pixels</b> governs this page. No margin, size, or gap is arbitrary; each is a measured multiple of the whole.</p>
+      </div>
+      <div class="module-figure reveal">
+        <div class="course"><b>1&times;</b><span class="bar" style="width:8px"></span><span>8px &middot; hairline gap</span></div>
+        <div class="course"><b>2&times;</b><span class="bar" style="width:16px"></span><span>16px &middot; text spacing</span></div>
+        <div class="course"><b>3&times;</b><span class="bar" style="width:24px"></span><span>24px &middot; inner padding</span></div>
+        <div class="course"><b>4&times;</b><span class="bar" style="width:32px"></span><span>32px &middot; page margin</span></div>
+        <div class="course"><b>8&times;</b><span class="bar" style="width:64px"></span><span>64px &middot; the bay</span></div>
+        <div class="course"><b>12&times;</b><span class="bar" style="width:96px"></span><span>96px &middot; the storey</span></div>
+      </div>
+      <div class="rule"><span class="node"></span></div>
+    </div>
+  </section>
+
+  <!-- ============================ IV. THE FIVE ORDERS ============================ -->
+  <section id="orders">
+    <div class="plan">
+      <div class="section-head axis measure reveal">
+        <p class="eyebrow">IV &middot; The Five Orders</p>
+        <h2>A character for every purpose</h2>
+        <p>Vignola ranged the orders from plainest to richest. A page, too, may choose its temperament &mdash; then hold to it with discipline.</p>
+      </div>
+
+      <div class="colonnade">
+        <!-- Each order drawn with progressively richer capitals -->
+        <article class="order reveal">
+          <svg viewBox="0 0 60 132" aria-hidden="true">
+            <rect x="16" y="16" width="28" height="8" fill="#e2d6bc" stroke="#29241d"/>
+            <rect x="22" y="24" width="16" height="96" fill="url(#shaft)" stroke="#29241d"/>
+            <rect x="14" y="120" width="32" height="10" fill="#e2d6bc" stroke="#29241d"/>
+          </svg>
+          <h3>Tuscan</h3>
+          <p>Reliability. Plain shaft, strong spacing, no excess. For engineering &amp; the state.</p>
+        </article>
+
+        <article class="order reveal">
+          <svg viewBox="0 0 60 132" aria-hidden="true">
+            <rect x="14" y="16" width="32" height="6" fill="#e2d6bc" stroke="#29241d"/>
+            <rect x="18" y="22" width="24" height="6" fill="#efe7d6" stroke="#29241d"/>
+            <rect x="22" y="28" width="16" height="92" fill="url(#shaft)" stroke="#29241d"/>
+            <rect x="14" y="120" width="32" height="10" fill="#e2d6bc" stroke="#29241d"/>
+          </svg>
+          <h3>Doric</h3>
+          <p>Authority. Bold headings, large proportions, strong horizontal divisions.</p>
+        </article>
+
+        <article class="order reveal">
+          <svg viewBox="0 0 60 132" aria-hidden="true">
+            <path d="M14 22 q6 -8 14 0 M46 22 q-6 -8 -14 0" fill="none" stroke="#8a6a34"/>
+            <circle cx="20" cy="22" r="4" fill="none" stroke="#8a6a34"/>
+            <circle cx="40" cy="22" r="4" fill="none" stroke="#8a6a34"/>
+            <rect x="16" y="26" width="28" height="4" fill="#efe7d6" stroke="#29241d"/>
+            <rect x="23" y="30" width="14" height="90" fill="url(#shaft)" stroke="#29241d"/>
+            <rect x="16" y="120" width="28" height="10" fill="#e2d6bc" stroke="#29241d"/>
+          </svg>
+          <h3>Ionic</h3>
+          <p>Refinement. Scroll-volutes, balanced whitespace, elegance without excess.</p>
+        </article>
+
+        <article class="order reveal">
+          <svg viewBox="0 0 60 132" aria-hidden="true">
+            <path d="M22 14 q-8 6 -6 14 M38 14 q8 6 6 14" fill="none" stroke="#8a6a34"/>
+            <path d="M30 12 q-4 8 0 16 q4 -8 0 -16" fill="none" stroke="#8a6a34"/>
+            <rect x="16" y="28" width="28" height="4" fill="#efe7d6" stroke="#29241d"/>
+            <rect x="24" y="32" width="12" height="88" fill="url(#shaft)" stroke="#29241d"/>
+            <rect x="16" y="120" width="28" height="10" fill="#e2d6bc" stroke="#29241d"/>
+          </svg>
+          <h3>Corinthian</h3>
+          <p>Richness. Acanthus detail, expressive imagery, ornament used with intent.</p>
+        </article>
+
+        <article class="order reveal">
+          <svg viewBox="0 0 60 132" aria-hidden="true">
+            <path d="M14 24 q6 -8 12 -2 M46 24 q-6 -8 -12 -2" fill="none" stroke="#8a6a34"/>
+            <path d="M30 12 q-5 8 0 16 q5 -8 0 -16" fill="none" stroke="#8a6a34"/>
+            <rect x="16" y="28" width="28" height="4" fill="#efe7d6" stroke="#29241d"/>
+            <rect x="24" y="32" width="12" height="88" fill="url(#shaft)" stroke="#29241d"/>
+            <rect x="16" y="120" width="28" height="10" fill="#e2d6bc" stroke="#29241d"/>
+          </svg>
+          <h3>Composite</h3>
+          <p>Union. Strength and elegance joined &mdash; many systems, one unity.</p>
+        </article>
+      </div>
+      <div class="rule"><span class="node"></span></div>
+      <p class="axis measure reveal" style="color:var(--ink-soft)">This treatise is set in the <b>Ionic</b> manner: slender proportion, refined lettering, and quiet whitespace.</p>
+    </div>
+  </section>
+
+  <!-- ============================ VIII. PROPORTION ============================ -->
+  <section id="proportion" class="ground">
+    <div class="plan">
+      <div class="section-head axis measure reveal">
+        <p class="eyebrow">VIII &middot; Proportion</p>
+        <h2>Beauty is correct relationship</h2>
+        <p>The question is never &ldquo;how big?&rdquo; but &ldquo;how does this relate to the rest?&rdquo; The type scale and the layout answer with harmonic ratios.</p>
+      </div>
+      <ul class="ledger reveal">
+        <li><span>Pediment &rarr; Column</span><span class="ratio">72 : 48 &nbsp;=&nbsp; 3 : 2</span></li>
+        <li><span>Column &rarr; Bay</span><span class="ratio">48 : 32 &nbsp;=&nbsp; 3 : 2</span></li>
+        <li><span>Reading measure</span><span class="ratio">&asymp; 66 characters</span></li>
+        <li><span>Vertical rhythm</span><span class="ratio">1 : 1.7 line height</span></li>
+        <li><span>The whole</span><span class="ratio">&phi; &nbsp; 1 : 1.618</span></li>
+      </ul>
+      <div class="rule"><span class="node"></span></div>
+    </div>
+  </section>
+
+  <!-- ============================ II. THE PLAN ============================ -->
+  <section id="plan">
+    <div class="plan">
+      <div class="section-head axis measure reveal">
+        <p class="eyebrow">II &middot; The Plan</p>
+        <h2>Rooms, not pages</h2>
+        <p>A homepage is a piazza leading into a palace. The visitor always knows where they stand, what matters, and where they may go next.</p>
+      </div>
+      <div class="blueprint reveal" role="img" aria-label="Vertical hierarchy from pediment to foundation">
+        <div class="storey crown"><b>Pediment</b><span>identity &amp; crown</span></div>
+        <div class="storey"><b>Entablature</b><span>primary navigation</span></div>
+        <div class="storey"><b>Portico</b><span>hero &amp; introduction</span></div>
+        <div class="storey"><b>Main Hall</b><span>principal content</span></div>
+        <div class="storey"><b>Side Chambers</b><span>secondary matter</span></div>
+        <div class="storey"><b>Foundation</b><span>footer, contact, legal</span></div>
+      </div>
+      <div class="rule"><span class="node"></span></div>
+    </div>
+  </section>
+
+  <!-- ============================ SIDE CHAMBERS (tripartite / rule of three) ============================ -->
+  <section class="ground">
+    <div class="plan">
+      <div class="section-head axis measure reveal">
+        <p class="eyebrow">X &middot; The Rule of Three</p>
+        <h2>Column &middot; Center &middot; Column</h2>
+        <p>The classical triad, held in balance about a central axis &mdash; and preserved, never scattered, when the viewport narrows.</p>
+      </div>
+      <div class="tripartite">
+        <div class="chamber reveal">
+          <h3>Structure</h3>
+          <p>Layout is drawn first. The grid is the invisible geometry that carries every part.</p>
+          <p>Hierarchy is decided before a single colour is chosen.</p>
+        </div>
+        <div class="chamber center reveal">
+          <h3>Proportion</h3>
+          <p>Measured relationships bind the parts into a whole. Ratios govern type, spacing, and the reading measure alike.</p>
+          <p>Nothing stands alone; each element answers to the module.</p>
+        </div>
+        <div class="chamber reveal">
+          <h3>Ornament</h3>
+          <p>Decoration arrives last, and only to reveal structure &mdash; a thin rule, an engraved capital, a rare stroke of bronze.</p>
+          <p>If it hides the building, it is removed.</p>
+        </div>
+      </div>
+      <div class="rule"><span class="node"></span></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================ FOUNDATION / FOOTER ============================ -->
+<footer class="foundation">
+  <div class="plan axis">
+    <p class="inscription">Ordo &middot; Proportio &middot; Firmitas</p>
+    <div class="rule"><span class="node"></span></div>
+    <p>Made deliberately. Nothing is accidental. Everything has a place.</p>
+    <small>&copy; MMXXVI &mdash; A Treatise on Classical Web Design, after the Regola of Giacomo Barozzi da Vignola.</small>
+  </div>
+</footer>
+
+<script>
+  // IX. Ornament used carefully: a single, quiet reveal on entrance. No excess motion.
+  (function () {
+    var items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach(function (el) { el.classList.add('seen'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

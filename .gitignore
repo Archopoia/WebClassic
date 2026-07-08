@@ -1,0 +1,14 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & temp
+*.log
+*.tmp
+
+# Dependency / build output (if tooling is added later)
+node_modules/
+dist/
+build/
+.cache/
