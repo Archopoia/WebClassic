@@ -63,6 +63,7 @@
   --ornament:  0.6;        /* flourish visibility 0..1 */
   --shaft-w:   34;         /* specimen column diameter (svg units) */
   --facade-scale: 1;       /* hero colonnade slenderness */
+  --facade-crown: 1;       /* pediment + entablature mass */
   --order-ratio: "1 : 1.333";
   --order-slender: "9 diameters";
 }
@@ -77,31 +78,31 @@ html[data-order="tuscan"] {
   --t-sub: 1.62rem; --t-head: 2.05rem; --t-display: 3rem;
   --w-display: 600; --w-head: 600; --track: 0.06em; --rhythm: 1.58;
   --accent: #7a6a4a; --accent-2: #8a765123; --ornament: 0.06;
-  --shaft-w: 44; --facade-scale: 1.4; --order-ratio: "1 : 1.2"; --order-slender: "7 diameters";
+  --shaft-w: 44; --facade-scale: 1.4; --facade-crown: 1.12; --order-ratio: "1 : 1.2"; --order-slender: "7 diameters";
 }
 html[data-order="doric"] {
   --t-sub: 1.75rem; --t-head: 2.6rem; --t-display: 3.6rem;
   --w-display: 600; --w-head: 600; --track: 0.09em; --rhythm: 1.6;
   --accent: #6f5a2e; --accent-2: #9c7a3f; --ornament: 0.25;
-  --shaft-w: 38; --facade-scale: 1.18; --order-ratio: "1 : 1.25"; --order-slender: "8 diameters";
+  --shaft-w: 38; --facade-scale: 1.18; --facade-crown: 1.06; --order-ratio: "1 : 1.25"; --order-slender: "8 diameters";
 }
 html[data-order="ionic"] {
   --t-sub: 2rem; --t-head: 3rem; --t-display: 4.5rem;
   --w-display: 500; --w-head: 500; --track: 0.16em; --rhythm: 1.7;
   --accent: #8a6a34; --accent-2: #a9863f; --ornament: 0.6;
-  --shaft-w: 30; --facade-scale: 1; --order-ratio: "1 : 1.333"; --order-slender: "9 diameters";
+  --shaft-w: 30; --facade-scale: 1; --facade-crown: 1; --order-ratio: "1 : 1.333"; --order-slender: "9 diameters";
 }
 html[data-order="corinthian"] {
   --t-sub: 2.25rem; --t-head: 3.6rem; --t-display: 5.6rem;
   --w-display: 500; --w-head: 500; --track: 0.2em; --rhythm: 1.75;
   --accent: #a9863f; --accent-2: #c19a4a; --ornament: 1;
-  --shaft-w: 24; --facade-scale: 0.72; --order-ratio: "1 : 1.414"; --order-slender: "10 diameters";
+  --shaft-w: 24; --facade-scale: 0.72; --facade-crown: 0.9; --order-ratio: "1 : 1.414"; --order-slender: "10 diameters";
 }
 html[data-order="composite"] {
   --t-sub: 2.4rem; --t-head: 3.9rem; --t-display: 6rem;
   --w-display: 600; --w-head: 500; --track: 0.18em; --rhythm: 1.72;
   --accent: #9c7a3f; --accent-2: #c19a4a; --ornament: 1;
-  --shaft-w: 24; --facade-scale: 0.72; --order-ratio: "1 : 1.5"; --order-slender: "10 diameters";
+  --shaft-w: 24; --facade-scale: 0.72; --facade-crown: 0.94; --order-ratio: "1 : 1.5"; --order-slender: "10 diameters";
 }
 
 /* =====================================================================
@@ -276,6 +277,14 @@ body.show-grid .overlay { opacity: 1; }
   transform: scaleX(var(--facade-scale));
   transition: transform 520ms cubic-bezier(.2,.7,.2,1);
 }
+/* The crown (pediment + entablature) gains or sheds mass, scaling about its base */
+.facade .fcrown {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scaleY(var(--facade-crown));
+  transition: transform 520ms cubic-bezier(.2,.7,.2,1);
+}
+.facade .dentils { opacity: var(--ornament); transition: opacity 520ms ease; }
 .portico h1 {
   font-family: "Cormorant Garamond", serif; font-weight: var(--w-display);
   font-size: var(--t-display); line-height: 1.08; margin: 0 0 var(--s-3);
@@ -482,11 +491,18 @@ section { padding-block: var(--s-12); position: relative; scroll-margin-top: var
           </linearGradient>
         </defs>
         <g fill="none" stroke="#29241d" stroke-width="1.5">
-          <polygon points="360,18 690,120 30,120" fill="#efe7d6"/>
-          <polygon points="360,44 640,120 80,120" fill="none" stroke="currentColor" style="stroke:var(--accent)" stroke-width="1"/>
-          <circle cx="360" cy="92" r="8" style="fill:var(--accent)" stroke="none"/>
-          <rect x="30" y="120" width="660" height="16" fill="#e7dcc4"/>
-          <rect x="30" y="136" width="660" height="10" fill="#efe7d6"/>
+          <!-- The crown: pediment + entablature; its mass follows the order (--facade-crown) -->
+          <g class="fcrown">
+            <polygon points="360,18 690,120 30,120" fill="#efe7d6" vector-effect="non-scaling-stroke"/>
+            <polygon points="360,44 640,120 80,120" fill="none" stroke="currentColor" style="stroke:var(--accent)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+            <circle cx="360" cy="92" r="8" style="fill:var(--accent)" stroke="none"/>
+            <rect x="30" y="120" width="660" height="16" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
+            <rect x="30" y="136" width="660" height="10" fill="#efe7d6" vector-effect="non-scaling-stroke"/>
+            <!-- dentils under the cornice; grow richer with the order (--ornament) -->
+            <g class="dentils" fill="#d8c9a6" stroke="none">
+              <rect x="60" y="130" width="9" height="6"/><rect x="84" y="130" width="9" height="6"/><rect x="108" y="130" width="9" height="6"/><rect x="132" y="130" width="9" height="6"/><rect x="156" y="130" width="9" height="6"/><rect x="180" y="130" width="9" height="6"/><rect x="204" y="130" width="9" height="6"/><rect x="228" y="130" width="9" height="6"/><rect x="252" y="130" width="9" height="6"/><rect x="276" y="130" width="9" height="6"/><rect x="300" y="130" width="9" height="6"/><rect x="324" y="130" width="9" height="6"/><rect x="348" y="130" width="9" height="6"/><rect x="372" y="130" width="9" height="6"/><rect x="396" y="130" width="9" height="6"/><rect x="420" y="130" width="9" height="6"/><rect x="444" y="130" width="9" height="6"/><rect x="468" y="130" width="9" height="6"/><rect x="492" y="130" width="9" height="6"/><rect x="516" y="130" width="9" height="6"/><rect x="540" y="130" width="9" height="6"/><rect x="564" y="130" width="9" height="6"/><rect x="588" y="130" width="9" height="6"/><rect x="612" y="130" width="9" height="6"/><rect x="636" y="130" width="9" height="6"/>
+            </g>
+          </g>
           <!-- Six columns; each group's slenderness follows the chosen order (--facade-scale) -->
           <g class="fcol">
             <rect x="64" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
