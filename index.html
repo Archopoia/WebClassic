@@ -238,42 +238,53 @@ main { position: relative; z-index: 3; }
    ===================================================================== */
 .entablature {
   position: sticky; top: 0; z-index: 30;
-  background: rgba(247, 240, 224, 0.93);
-  backdrop-filter: saturate(1.15) blur(8px);
-  border-bottom: 2px solid var(--border-tan);
+  background:
+    radial-gradient(circle at 18% 50%, rgba(100, 48, 48, 0.4) 0%, transparent 55%),
+    radial-gradient(circle at 82% 50%, rgba(100, 48, 48, 0.32) 0%, transparent 55%),
+    linear-gradient(135deg, var(--burgundy-deep) 0%, var(--burgundy) 100%);
+  backdrop-filter: saturate(1.1) blur(4px);
+  border-bottom: 3px solid var(--border-dark);
   box-shadow:
-    0 1px 0 var(--gold-glow),
-    0 4px 16px -8px rgba(61, 36, 24, 0.18),
-    inset 0 -1px 0 var(--burgundy-soft);
+    inset 0 1px 0 var(--gold-glow),
+    0 4px 20px -6px rgba(26, 5, 5, 0.45);
 }
-.entablature .plan { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: var(--s-8); }
+.entablature::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 24px,
+    var(--gold-hatch) 24px, var(--gold-hatch) 25px
+  );
+  pointer-events: none;
+}
+.entablature .plan { position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: var(--s-8); }
 .entablature nav ul { display: flex; gap: var(--s-4); list-style: none; margin: 0; padding: 0; }
 .entablature nav.left { justify-self: start; }
 .entablature nav.right { justify-self: end; }
 .entablature nav a {
   font-family: "Cinzel", serif; font-size: var(--t-caption); letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--ink-soft); text-decoration: none;
+  text-transform: uppercase; color: rgba(243, 226, 169, 0.78); text-decoration: none;
   padding: var(--s-1) var(--s-2); border-bottom: 1px solid transparent;
   border-radius: 2px;
   transition: color var(--ease-hover), border-color var(--ease-hover),
               background var(--ease-hover), box-shadow var(--ease-hover), transform var(--ease-hover);
 }
 .entablature nav a:hover {
-  color: var(--burgundy);
+  color: var(--gold-glow);
   border-color: var(--gold-glow);
-  background: var(--hover-bg);
+  background: rgba(255, 235, 198, 0.1);
   box-shadow:
-    0 0 10px 3px rgba(255, 235, 198, 0.35),
-    inset 0 0 8px 1px rgba(234, 203, 102, 0.12);
+    0 0 12px 3px rgba(255, 235, 198, 0.2),
+    inset 0 0 8px 1px rgba(234, 203, 102, 0.08);
   transform: translateY(-1px);
 }
 .colophon {
   justify-self: center; text-align: center; font-family: "Cinzel", serif;
-  letter-spacing: 0.2em; font-size: var(--t-caption); color: var(--ink);
+  letter-spacing: 0.2em; font-size: var(--t-caption); color: var(--gold-glow);
   text-decoration: none; padding: var(--s-1) var(--s-2);
   transition: color var(--ease-hover), text-shadow var(--ease-hover);
 }
-.colophon:hover { color: var(--burgundy); text-shadow: 0 0 12px rgba(255, 235, 198, 0.45); }
+.colophon:hover { color: var(--text-cream); text-shadow: 0 0 14px rgba(255, 235, 198, 0.55); }
 
 /* =====================================================================
    THE INSTRUMENT — a fixed control panel: choose order, reveal module
@@ -857,15 +868,20 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
           <linearGradient id="shaft" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0" stop-color="#ebd4b8"/><stop offset="0.5" stop-color="#faf3e4"/><stop offset="1" stop-color="#e6d0b0"/>
           </linearGradient>
+          <linearGradient id="burgundy-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#643030"/><stop offset="1" stop-color="#421212"/>
+          </linearGradient>
         </defs>
         <g fill="none" stroke="#3d2418" stroke-width="1.5">
           <!-- The crown: pediment + entablature; its mass follows the order (--facade-crown) -->
           <g class="fcrown">
-            <polygon points="360,18 690,120 30,120" fill="#f4ebda" vector-effect="non-scaling-stroke"/>
-            <polygon points="360,44 640,120 80,120" fill="none" stroke="currentColor" style="stroke:var(--accent)" stroke-width="1" vector-effect="non-scaling-stroke"/>
-            <circle cx="360" cy="92" r="8" style="fill:var(--accent)" stroke="none"/>
+            <!-- Pediment frame: beige outer ring only; inner triangle is a cutout -->
+            <path fill="#ebd4b8" fill-rule="evenodd" vector-effect="non-scaling-stroke"
+              d="M360,18 L690,120 L30,120 Z M360,44 L640,120 L80,120 Z"/>
+            <polygon points="360,44 640,120 80,120" fill="none" stroke="currentColor" style="stroke:var(--gold-glow)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+            <circle cx="360" cy="92" r="8" fill="#ebd4b8" stroke="none"/>
             <rect x="30" y="120" width="660" height="16" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
-            <rect x="30" y="136" width="660" height="10" fill="#f4ebda" vector-effect="non-scaling-stroke"/>
+            <rect x="30" y="136" width="660" height="10" fill="url(#burgundy-fill)" vector-effect="non-scaling-stroke"/>
             <!-- dentils under the cornice; grow richer with the order (--ornament) -->
             <g class="dentils" fill="#dcc9a0" stroke="none">
               <rect x="60" y="130" width="9" height="6"/><rect x="84" y="130" width="9" height="6"/><rect x="108" y="130" width="9" height="6"/><rect x="132" y="130" width="9" height="6"/><rect x="156" y="130" width="9" height="6"/><rect x="180" y="130" width="9" height="6"/><rect x="204" y="130" width="9" height="6"/><rect x="228" y="130" width="9" height="6"/><rect x="252" y="130" width="9" height="6"/><rect x="276" y="130" width="9" height="6"/><rect x="300" y="130" width="9" height="6"/><rect x="324" y="130" width="9" height="6"/><rect x="348" y="130" width="9" height="6"/><rect x="372" y="130" width="9" height="6"/><rect x="396" y="130" width="9" height="6"/><rect x="420" y="130" width="9" height="6"/><rect x="444" y="130" width="9" height="6"/><rect x="468" y="130" width="9" height="6"/><rect x="492" y="130" width="9" height="6"/><rect x="516" y="130" width="9" height="6"/><rect x="540" y="130" width="9" height="6"/><rect x="564" y="130" width="9" height="6"/><rect x="588" y="130" width="9" height="6"/><rect x="612" y="130" width="9" height="6"/><rect x="636" y="130" width="9" height="6"/>
@@ -874,35 +890,41 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
           <!-- Six columns; equal eustyle intercolumniation (80px ≈ 2.35 diameters), axis between III & IV -->
           <g class="fcol">
             <rect x="52" y="146" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
-            <rect x="58" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="69" y1="152" x2="69" y2="260" stroke="#c4a87a" stroke-width="0.75"/><line x1="81" y1="152" x2="81" y2="260" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="58" y="150" width="34" height="106" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="69" y1="152" x2="69" y2="256" stroke="#c4a87a" stroke-width="0.75"/><line x1="81" y1="152" x2="81" y2="256" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="52" y="256" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
           </g>
           <g class="fcol">
             <rect x="166" y="146" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
-            <rect x="172" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="183" y1="152" x2="183" y2="260" stroke="#c4a87a" stroke-width="0.75"/><line x1="195" y1="152" x2="195" y2="260" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="172" y="150" width="34" height="106" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="183" y1="152" x2="183" y2="256" stroke="#c4a87a" stroke-width="0.75"/><line x1="195" y1="152" x2="195" y2="256" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="166" y="256" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
           </g>
           <g class="fcol">
             <rect x="280" y="146" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
-            <rect x="286" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="297" y1="152" x2="297" y2="260" stroke="#c4a87a" stroke-width="0.75"/><line x1="309" y1="152" x2="309" y2="260" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="286" y="150" width="34" height="106" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="297" y1="152" x2="297" y2="256" stroke="#c4a87a" stroke-width="0.75"/><line x1="309" y1="152" x2="309" y2="256" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="280" y="256" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
           </g>
           <g class="fcol">
             <rect x="394" y="146" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
-            <rect x="400" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="411" y1="152" x2="411" y2="260" stroke="#c4a87a" stroke-width="0.75"/><line x1="423" y1="152" x2="423" y2="260" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="400" y="150" width="34" height="106" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="411" y1="152" x2="411" y2="256" stroke="#c4a87a" stroke-width="0.75"/><line x1="423" y1="152" x2="423" y2="256" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="394" y="256" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
           </g>
           <g class="fcol">
             <rect x="508" y="146" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
-            <rect x="514" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="525" y1="152" x2="525" y2="260" stroke="#c4a87a" stroke-width="0.75"/><line x1="537" y1="152" x2="537" y2="260" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="514" y="150" width="34" height="106" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="525" y1="152" x2="525" y2="256" stroke="#c4a87a" stroke-width="0.75"/><line x1="537" y1="152" x2="537" y2="256" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="508" y="256" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
           </g>
           <g class="fcol">
             <rect x="622" y="146" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
-            <rect x="628" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="639" y1="152" x2="639" y2="260" stroke="#c4a87a" stroke-width="0.75"/><line x1="651" y1="152" x2="651" y2="260" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="628" y="150" width="34" height="106" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="639" y1="152" x2="639" y2="256" stroke="#c4a87a" stroke-width="0.75"/><line x1="651" y1="152" x2="651" y2="256" stroke="#c4a87a" stroke-width="0.75"/>
+            <rect x="622" y="256" width="46" height="6" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
           </g>
-          <rect x="40" y="262" width="640" height="10" fill="#ebd4b8"/>
+          <rect x="30" y="262" width="660" height="10" fill="url(#burgundy-fill)"/>
           <rect x="20" y="272" width="680" height="12" fill="#e6d0b0"/>
         </g>
       </svg>
