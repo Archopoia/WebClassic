@@ -1,4 +1,4 @@
-# WebClassic
+# ClassicWeb
 
 *The Order* — a treatise on **classical web design**: a webpage built as a classical building, governed by order, proportion, hierarchy, rhythm, and a single module, after the manner of Giacomo Barozzi da Vignola.
 

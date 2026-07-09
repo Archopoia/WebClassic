@@ -50,13 +50,14 @@
   --line:        rgba(41, 36, 29, 0.16);
   --line-strong: rgba(41, 36, 29, 0.34);
 
-  /* ---- These are OVERRIDDEN by each order below ---- */
+  /* ---- All of these are OVERRIDDEN by each order below, so that
+          choosing an order re-proportions the WHOLE page, not the title alone ---- */
   --t-sub:     2rem;
   --t-head:    3rem;
   --t-display: 4.5rem;
   --w-display: 500;
   --w-head:    500;
-  --track:     0.16em;     /* inscriptional tracking */
+  --track:     0.16em;     /* inscriptional (caps) tracking */
   --rhythm:    1.7;        /* body line-height */
   --accent:      #8a6a34;  /* bronze */
   --accent-2:    #a9863f;
@@ -66,6 +67,16 @@
   --facade-crown: 1;       /* pediment + entablature mass */
   --order-ratio: "1 : 1.333";
   --order-slender: "9 diameters";
+
+  /* Whole-page personality (overridden per order) */
+  --t-body:    1.125rem;   /* body size shifts with the order */
+  --space:     1;          /* spacing density multiplier */
+  --rule-w:    1px;        /* thickness of thin rules */
+  --border-w:  1px;        /* thickness of panel borders */
+  --head-family: "Cormorant Garamond", serif;  /* headings change typeface */
+  --head-style:  normal;
+  --head-transform: none;
+  --head-track:  0.005em;
 }
 
 /* =====================================================================
@@ -74,35 +85,55 @@
    its own type ratio, tracking, weight, ornament, accent, and column
    slenderness — exactly as Vignola ranged them from plainest to richest.
    ===================================================================== */
+/* TUSCAN — plain, sturdy, dense; inscriptional caps, heavy rules, cool stone */
 html[data-order="tuscan"] {
-  --t-sub: 1.62rem; --t-head: 2.05rem; --t-display: 3rem;
-  --w-display: 600; --w-head: 600; --track: 0.06em; --rhythm: 1.58;
-  --accent: #7a6a4a; --accent-2: #8a765123; --ornament: 0.06;
-  --shaft-w: 44; --facade-scale: 1.4; --facade-crown: 1.12; --order-ratio: "1 : 1.2"; --order-slender: "7 diameters";
+  --t-sub: 1.5rem; --t-head: 1.9rem; --t-display: 2.6rem;
+  --w-display: 600; --w-head: 600; --track: 0.05em; --rhythm: 1.5;
+  --accent: #7a6a4a; --accent-2: #8a7651; --ornament: 0.04;
+  --shaft-w: 46; --facade-scale: 1.45; --facade-crown: 1.14; --order-ratio: "1 : 1.2"; --order-slender: "7 diameters";
+  --t-body: 1.05rem; --space: 0.8; --rule-w: 2px; --border-w: 2px;
+  --head-family: "Cinzel", serif; --head-style: normal; --head-transform: uppercase; --head-track: 0.05em;
+  --stone: #eee8db; --stone-2: #e4dbc7; --marble: #eae2d0;
 }
+/* DORIC — authority, strong rhythm; bold inscriptional caps */
 html[data-order="doric"] {
-  --t-sub: 1.75rem; --t-head: 2.6rem; --t-display: 3.6rem;
-  --w-display: 600; --w-head: 600; --track: 0.09em; --rhythm: 1.6;
-  --accent: #6f5a2e; --accent-2: #9c7a3f; --ornament: 0.25;
-  --shaft-w: 38; --facade-scale: 1.18; --facade-crown: 1.06; --order-ratio: "1 : 1.25"; --order-slender: "8 diameters";
+  --t-sub: 1.7rem; --t-head: 2.35rem; --t-display: 3.2rem;
+  --w-display: 700; --w-head: 700; --track: 0.08em; --rhythm: 1.55;
+  --accent: #6f5a2e; --accent-2: #9c7a3f; --ornament: 0.2;
+  --shaft-w: 40; --facade-scale: 1.2; --facade-crown: 1.06; --order-ratio: "1 : 1.25"; --order-slender: "8 diameters";
+  --t-body: 1.1rem; --space: 0.9; --rule-w: 1.5px; --border-w: 1.5px;
+  --head-family: "Cinzel", serif; --head-style: normal; --head-transform: uppercase; --head-track: 0.035em;
+  --stone: #f1ead9; --stone-2: #e7dcc6; --marble: #ede4d1;
 }
+/* IONIC — refined, balanced; flowing serif (the baseline) */
 html[data-order="ionic"] {
-  --t-sub: 2rem; --t-head: 3rem; --t-display: 4.5rem;
+  --t-sub: 2rem; --t-head: 2.9rem; --t-display: 4.3rem;
   --w-display: 500; --w-head: 500; --track: 0.16em; --rhythm: 1.7;
   --accent: #8a6a34; --accent-2: #a9863f; --ornament: 0.6;
   --shaft-w: 30; --facade-scale: 1; --facade-crown: 1; --order-ratio: "1 : 1.333"; --order-slender: "9 diameters";
+  --t-body: 1.125rem; --space: 1; --rule-w: 1px; --border-w: 1px;
+  --head-family: "Cormorant Garamond", serif; --head-style: normal; --head-transform: none; --head-track: 0.005em;
+  --stone: #f3ecdd; --stone-2: #ece2ce; --marble: #efe7d6;
 }
+/* CORINTHIAN — rich, airy, ornate; flowing italic, generous space, gilded */
 html[data-order="corinthian"] {
-  --t-sub: 2.25rem; --t-head: 3.6rem; --t-display: 5.6rem;
-  --w-display: 500; --w-head: 500; --track: 0.2em; --rhythm: 1.75;
-  --accent: #a9863f; --accent-2: #c19a4a; --ornament: 1;
+  --t-sub: 2.3rem; --t-head: 3.5rem; --t-display: 5.4rem;
+  --w-display: 600; --w-head: 500; --track: 0.2em; --rhythm: 1.82;
+  --accent: #a9863f; --accent-2: #c9a24e; --ornament: 1;
   --shaft-w: 24; --facade-scale: 0.72; --facade-crown: 0.9; --order-ratio: "1 : 1.414"; --order-slender: "10 diameters";
+  --t-body: 1.15rem; --space: 1.24; --rule-w: 1px; --border-w: 1px;
+  --head-family: "Cormorant Garamond", serif; --head-style: italic; --head-transform: none; --head-track: 0.01em;
+  --stone: #f5edda; --stone-2: #efe3ca; --marble: #f2e9d4;
 }
+/* COMPOSITE — grand, ceremonial; wide roman serif, largest, warm gold */
 html[data-order="composite"] {
-  --t-sub: 2.4rem; --t-head: 3.9rem; --t-display: 6rem;
-  --w-display: 600; --w-head: 500; --track: 0.18em; --rhythm: 1.72;
-  --accent: #9c7a3f; --accent-2: #c19a4a; --ornament: 1;
+  --t-sub: 2.5rem; --t-head: 3.8rem; --t-display: 5.8rem;
+  --w-display: 600; --w-head: 600; --track: 0.18em; --rhythm: 1.76;
+  --accent: #9c7a3f; --accent-2: #c9a24e; --ornament: 1;
   --shaft-w: 24; --facade-scale: 0.72; --facade-crown: 0.94; --order-ratio: "1 : 1.5"; --order-slender: "10 diameters";
+  --t-body: 1.15rem; --space: 1.16; --rule-w: 1.25px; --border-w: 1.25px;
+  --head-family: "Cormorant Garamond", serif; --head-style: normal; --head-transform: none; --head-track: 0.03em;
+  --stone: #f4ecda; --stone-2: #ede1c8; --marble: #f0e7d2;
 }
 
 /* =====================================================================
@@ -122,7 +153,7 @@ body {
   line-height: var(--rhythm);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  transition: line-height 400ms ease;
+  transition: line-height 400ms ease, font-size 400ms ease, background-color 600ms ease;
 }
 
 /* Elements that participate in the order transition */
@@ -155,7 +186,7 @@ h1, h2, h3, .eyebrow, .btn, .colophon, nav a, .lede,
 /* Thin rule ornament with a bronze node */
 .rule { display: flex; align-items: center; justify-content: center; gap: var(--s-2); margin: var(--s-4) 0; }
 .rule::before, .rule::after {
-  content: ""; height: 1px; flex: 1 1 auto; max-width: var(--s-16);
+  content: ""; height: var(--rule-w); flex: 1 1 auto; max-width: var(--s-16);
   background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
 }
 .rule .node { width: 7px; height: 7px; transform: rotate(45deg); border: 1px solid var(--accent); background: var(--stone); }
@@ -268,7 +299,7 @@ body.show-grid .overlay { opacity: 1; }
 /* =====================================================================
    PORTICO / HERO
    ===================================================================== */
-.portico { position: relative; padding-top: var(--s-12); padding-bottom: var(--s-10); overflow: hidden; }
+.portico { position: relative; padding-top: calc(var(--s-12) * var(--space)); padding-bottom: calc(var(--s-10) * var(--space)); overflow: hidden; }
 .facade { display: block; width: 100%; max-width: calc(var(--module) * 90); margin: 0 auto var(--s-6); }
 /* The hero colonnade re-proportions with the chosen order */
 .facade .fcol {
@@ -286,8 +317,9 @@ body.show-grid .overlay { opacity: 1; }
 }
 .facade .dentils { opacity: var(--ornament); transition: opacity 520ms ease; }
 .portico h1 {
-  font-family: "Cormorant Garamond", serif; font-weight: var(--w-display);
-  font-size: var(--t-display); line-height: 1.08; margin: 0 0 var(--s-3);
+  font-family: var(--head-family); font-weight: var(--w-display);
+  font-style: var(--head-style); text-transform: var(--head-transform); letter-spacing: var(--head-track);
+  font-size: var(--t-display); line-height: 1.1; margin: 0 0 var(--s-3);
 }
 .portico h1 em { font-style: italic; color: var(--accent); }
 .lede { font-size: 1.3rem; color: var(--ink-soft); margin: 0 auto; }
@@ -305,19 +337,20 @@ body.show-grid .overlay { opacity: 1; }
 /* =====================================================================
    ROOMS (sections)
    ===================================================================== */
-section { padding-block: var(--s-12); position: relative; scroll-margin-top: var(--s-8); }
-.section-head { margin-bottom: var(--s-8); }
+section { padding-block: calc(var(--s-12) * var(--space)); position: relative; scroll-margin-top: var(--s-8); }
+.section-head { margin-bottom: calc(var(--s-8) * var(--space)); }
 .section-head h2 {
-  font-family: "Cormorant Garamond", serif; font-weight: var(--w-head);
-  font-size: var(--t-head); line-height: 1.1; margin: 0 0 var(--s-2);
+  font-family: var(--head-family); font-weight: var(--w-head);
+  font-style: var(--head-style); text-transform: var(--head-transform); letter-spacing: var(--head-track);
+  font-size: var(--t-head); line-height: 1.12; margin: 0 0 var(--s-2);
 }
 .section-head p { margin: 0 auto; color: var(--ink-soft); }
-.ground { background: var(--stone-2); border-block: 1px solid var(--line); }
+.ground { background: var(--stone-2); border-block: var(--border-w) solid var(--line); transition: background-color 600ms ease; }
 
 /* Module figure — courses at true module widths */
 .module-figure { display: grid; gap: var(--s-1); max-width: calc(var(--module) * 56); margin: var(--s-6) auto 0; }
 .course { display: grid; grid-template-columns: 3.5rem 1fr auto; align-items: center; gap: var(--s-2);
-  background: var(--marble); border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: var(--s-1) var(--s-3); }
+  background: var(--marble); border: var(--border-w) solid var(--line); border-left: calc(var(--border-w) + 2px) solid var(--accent); padding: var(--s-1) var(--s-3); transition: background-color 600ms ease, border-color 400ms ease; }
 .course b { font-family: "Cinzel", serif; font-size: var(--t-caption); letter-spacing: 0.08em; }
 .course .bar { height: 8px; background: var(--accent-2); opacity: 0.55; }
 .course span { color: var(--ink-soft); font-size: var(--t-caption); text-align: right; }
@@ -376,7 +409,7 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
 
 /* Golden section diagram */
 .phi-room { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center; }
-.phi-figure { width: 100%; height: auto; border: 1px solid var(--line); background: var(--marble); }
+.phi-figure { width: 100%; height: auto; border: var(--border-w) solid var(--line); background: var(--marble); transition: background-color 600ms ease; }
 .ledger { list-style: none; margin: 0; padding: 0; }
 .ledger li { display: flex; justify-content: space-between; gap: var(--s-3); padding: var(--s-2) 0; border-bottom: 1px solid var(--line); }
 .ledger li:first-child { border-top: 1px solid var(--line); }
@@ -384,7 +417,7 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
 
 /* Human scale room — the body is the measure */
 .human-room { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center; }
-.human-figure { width: 100%; height: auto; border: 1px solid var(--line); background: var(--marble); }
+.human-figure { width: 100%; height: auto; border: var(--border-w) solid var(--line); background: var(--marble); transition: background-color 600ms ease; }
 .human-list { list-style: none; margin: var(--s-2) 0 0; padding: 0; }
 .human-list li { display: flex; justify-content: space-between; gap: var(--s-3); padding: var(--s-2) 0; border-bottom: 1px solid var(--line); }
 .human-list li:first-child { border-top: 1px solid var(--line); }
@@ -392,7 +425,7 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
 
 /* Symmetry room — mirrored bays about the axis */
 .symmetry { display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--s-4); align-items: stretch; }
-.bay { background: var(--marble); border: 1px solid var(--line); padding: var(--s-4); }
+.bay { background: var(--marble); border: var(--border-w) solid var(--line); padding: var(--s-4); transition: background-color 600ms ease, border-color 400ms ease; }
 .bay h3 { font-family: "Cinzel", serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 var(--s-2); }
 .bay p { margin: 0; color: var(--ink-soft); font-size: 1.02rem; }
 .bay.mirror { text-align: right; }
@@ -406,9 +439,9 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
 .mini-col span { font-family: "Cinzel", serif; font-size: 0.7rem; letter-spacing: 0.08em; color: var(--ink-soft); }
 
 /* The Plan / hierarchy blueprint */
-.blueprint { border: 1px solid var(--line-strong);
+.blueprint { border: var(--border-w) solid var(--line-strong);
   background: linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% var(--s-3), var(--marble);
-  padding: var(--s-4); max-width: calc(var(--module) * 80); margin: var(--s-6) auto 0; }
+  padding: var(--s-4); max-width: calc(var(--module) * 80); margin: var(--s-6) auto 0; transition: background-color 600ms ease; }
 .storey { text-align: center; padding: var(--s-2); margin-bottom: var(--s-1); border: 1px dashed var(--line-strong); background: rgba(243,236,221,0.6); }
 .storey:last-child { margin-bottom: 0; }
 .storey b { display: block; font-family: "Cinzel", serif; letter-spacing: 0.14em; text-transform: uppercase; font-size: var(--t-caption); }
@@ -526,36 +559,36 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
               <rect x="60" y="130" width="9" height="6"/><rect x="84" y="130" width="9" height="6"/><rect x="108" y="130" width="9" height="6"/><rect x="132" y="130" width="9" height="6"/><rect x="156" y="130" width="9" height="6"/><rect x="180" y="130" width="9" height="6"/><rect x="204" y="130" width="9" height="6"/><rect x="228" y="130" width="9" height="6"/><rect x="252" y="130" width="9" height="6"/><rect x="276" y="130" width="9" height="6"/><rect x="300" y="130" width="9" height="6"/><rect x="324" y="130" width="9" height="6"/><rect x="348" y="130" width="9" height="6"/><rect x="372" y="130" width="9" height="6"/><rect x="396" y="130" width="9" height="6"/><rect x="420" y="130" width="9" height="6"/><rect x="444" y="130" width="9" height="6"/><rect x="468" y="130" width="9" height="6"/><rect x="492" y="130" width="9" height="6"/><rect x="516" y="130" width="9" height="6"/><rect x="540" y="130" width="9" height="6"/><rect x="564" y="130" width="9" height="6"/><rect x="588" y="130" width="9" height="6"/><rect x="612" y="130" width="9" height="6"/><rect x="636" y="130" width="9" height="6"/>
             </g>
           </g>
-          <!-- Six columns; each group's slenderness follows the chosen order (--facade-scale) -->
+          <!-- Six columns; equal eustyle intercolumniation (80px ≈ 2.35 diameters), axis between III & IV -->
           <g class="fcol">
-            <rect x="64" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
-            <rect x="70" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="81" y1="152" x2="81" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="93" y1="152" x2="93" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
+            <rect x="52" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
+            <rect x="58" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="69" y1="152" x2="69" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="81" y1="152" x2="81" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
           </g>
           <g class="fcol">
-            <rect x="178" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
-            <rect x="184" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="195" y1="152" x2="195" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="207" y1="152" x2="207" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
+            <rect x="166" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
+            <rect x="172" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="183" y1="152" x2="183" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="195" y1="152" x2="195" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
           </g>
           <g class="fcol">
-            <rect x="292" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
-            <rect x="298" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="309" y1="152" x2="309" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="321" y1="152" x2="321" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
+            <rect x="280" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
+            <rect x="286" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="297" y1="152" x2="297" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="309" y1="152" x2="309" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
           </g>
           <g class="fcol">
-            <rect x="382" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
-            <rect x="388" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="399" y1="152" x2="399" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="411" y1="152" x2="411" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
+            <rect x="394" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
+            <rect x="400" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="411" y1="152" x2="411" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="423" y1="152" x2="423" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
           </g>
           <g class="fcol">
-            <rect x="496" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
-            <rect x="502" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="513" y1="152" x2="513" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="525" y1="152" x2="525" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
+            <rect x="508" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
+            <rect x="514" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="525" y1="152" x2="525" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="537" y1="152" x2="537" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
           </g>
           <g class="fcol">
-            <rect x="610" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
-            <rect x="616" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
-            <line x1="627" y1="152" x2="627" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="639" y1="152" x2="639" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
+            <rect x="622" y="146" width="46" height="6" fill="#e7dcc4" vector-effect="non-scaling-stroke"/>
+            <rect x="628" y="150" width="34" height="112" fill="url(#shaft)" vector-effect="non-scaling-stroke"/>
+            <line x1="639" y1="152" x2="639" y2="260" stroke="#c9bb9c" stroke-width="0.75"/><line x1="651" y1="152" x2="651" y2="260" stroke="#c9bb9c" stroke-width="0.75"/>
           </g>
           <rect x="40" y="262" width="640" height="10" fill="#e7dcc4"/>
           <rect x="20" y="272" width="680" height="12" fill="#e2d6bc"/>
