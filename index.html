@@ -875,15 +875,15 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
         <g fill="none" stroke="#3d2418" stroke-width="1.5">
           <!-- The crown: pediment + entablature; its mass follows the order (--facade-crown) -->
           <g class="fcrown">
-            <!-- Pediment frame: beige outer ring only; inner triangle is a cutout -->
-            <path fill="#ebd4b8" fill-rule="evenodd" vector-effect="non-scaling-stroke"
+            <!-- Pediment: full lighter marble fill; inner triangle remains a cutout -->
+            <path fill="#f4ebda" fill-rule="evenodd" vector-effect="non-scaling-stroke"
               d="M360,18 L690,120 L30,120 Z M360,44 L640,120 L80,120 Z"/>
             <polygon points="360,44 640,120 80,120" fill="none" stroke="currentColor" style="stroke:var(--gold-glow)" stroke-width="1" vector-effect="non-scaling-stroke"/>
-            <circle cx="360" cy="92" r="8" fill="#ebd4b8" stroke="none"/>
+            <circle cx="360" cy="92" r="8" fill="url(#burgundy-fill)" stroke="none"/>
             <rect x="30" y="120" width="660" height="16" fill="#ebd4b8" vector-effect="non-scaling-stroke"/>
-            <rect x="30" y="136" width="660" height="10" fill="url(#burgundy-fill)" vector-effect="non-scaling-stroke"/>
+            <rect x="30" y="136" width="660" height="10" fill="#f4ebda" vector-effect="non-scaling-stroke"/>
             <!-- dentils under the cornice; grow richer with the order (--ornament) -->
-            <g class="dentils" fill="#dcc9a0" stroke="none">
+            <g class="dentils" fill="url(#burgundy-fill)" stroke="none">
               <rect x="60" y="130" width="9" height="6"/><rect x="84" y="130" width="9" height="6"/><rect x="108" y="130" width="9" height="6"/><rect x="132" y="130" width="9" height="6"/><rect x="156" y="130" width="9" height="6"/><rect x="180" y="130" width="9" height="6"/><rect x="204" y="130" width="9" height="6"/><rect x="228" y="130" width="9" height="6"/><rect x="252" y="130" width="9" height="6"/><rect x="276" y="130" width="9" height="6"/><rect x="300" y="130" width="9" height="6"/><rect x="324" y="130" width="9" height="6"/><rect x="348" y="130" width="9" height="6"/><rect x="372" y="130" width="9" height="6"/><rect x="396" y="130" width="9" height="6"/><rect x="420" y="130" width="9" height="6"/><rect x="444" y="130" width="9" height="6"/><rect x="468" y="130" width="9" height="6"/><rect x="492" y="130" width="9" height="6"/><rect x="516" y="130" width="9" height="6"/><rect x="540" y="130" width="9" height="6"/><rect x="564" y="130" width="9" height="6"/><rect x="588" y="130" width="9" height="6"/><rect x="612" y="130" width="9" height="6"/><rect x="636" y="130" width="9" height="6"/>
             </g>
           </g>
@@ -1117,7 +1117,7 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
                    A14 14 0 0 1 200 114
                    A10 10 0 0 1 190 124
                    A4 4 0 0 1 186 120"
-                fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/>
+                fill="none" stroke="var(--burgundy)" stroke-width="1.8" stroke-linecap="round"/>
           <text x="81" y="88" text-anchor="middle" font-family="Cinzel, serif" font-size="15" fill="var(--ink-soft)">1</text>
           <text x="212" y="54" text-anchor="middle" font-family="Cinzel, serif" font-size="9" fill="var(--ink-soft)">0.618</text>
         </svg>
