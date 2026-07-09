@@ -189,7 +189,7 @@ body::before {
 
 /* Elements that participate in the order transition */
 h1, h2, h3, .eyebrow, .btn, .colophon, nav a, .lede,
-.order-name, .readout b, .specimen text {
+.order-name, .readout b, .specimen text, .portico-masthead {
   transition: font-size 420ms cubic-bezier(.2,.7,.2,1),
               letter-spacing 420ms ease, font-weight 420ms ease,
               color 300ms ease, box-shadow var(--ease-hover), transform var(--ease-hover),
@@ -438,6 +438,30 @@ body.show-grid .overlay { opacity: 1; }
   transition: transform 520ms cubic-bezier(.2,.7,.2,1);
 }
 .facade .dentils { opacity: var(--ornament); transition: opacity 520ms ease; }
+.portico-masthead {
+  display: flex; align-items: center; justify-content: center; gap: var(--s-3);
+  margin: 0 0 var(--s-5);
+  text-align: center;
+  transition: letter-spacing 420ms ease, font-size 420ms ease, color 300ms ease;
+}
+.portico-masthead::before, .portico-masthead::after {
+  content: "";
+  height: 1px;
+  flex: 1 1 auto;
+  max-width: var(--s-12);
+  background: linear-gradient(90deg, transparent, var(--burgundy), var(--gold-glow), transparent);
+}
+.portico-masthead__stack {
+  display: flex; flex-direction: column; align-items: center; gap: 0.1em;
+  font-family: "Cinzel", serif;
+  font-size: clamp(2.4rem, 6.5vw, 4.75rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.portico-masthead__line { display: block; color: var(--burgundy); text-shadow: 0 1px 0 rgba(255, 235, 198, 0.55); }
+.portico-masthead__web { color: var(--border-tan); letter-spacing: 0.28em; text-shadow: none; }
 .portico h1 {
   font-family: var(--head-family); font-weight: var(--w-display);
   font-style: var(--head-style); text-transform: var(--head-transform); letter-spacing: var(--head-track);
@@ -860,6 +884,12 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
   <!-- ============================ I. PORTICO / HERO ============================ -->
   <section class="portico">
     <div class="plan axis">
+      <p class="portico-masthead reveal" aria-label="Classic Web">
+        <span class="portico-masthead__stack">
+          <span class="portico-masthead__line">Classic</span>
+          <span class="portico-masthead__line portico-masthead__web">Web</span>
+        </span>
+      </p>
       <svg class="facade reveal" viewBox="0 0 720 300" role="img" aria-label="A classical temple facade">
         <defs>
           <linearGradient id="shaft" x1="0" y1="0" x2="1" y2="0">
