@@ -496,7 +496,7 @@ section { padding-block: calc(var(--s-12) * var(--space)); position: relative; s
   display: grid; grid-template-columns: 3.5rem 1fr auto; align-items: center; gap: var(--s-2);
   background: var(--marble);
   border: var(--border-w) solid var(--border-tan);
-  border-left: calc(var(--border-w) + 2px) solid var(--accent);
+  border-left: calc(var(--border-w) + 2px) solid var(--burgundy);
   box-shadow: inset 0 0 0 1px var(--burgundy-soft);
   padding: var(--s-1) var(--s-3);
   transition: background var(--ease-hover), border-color var(--ease-hover),
@@ -512,22 +512,27 @@ section { padding-block: calc(var(--s-12) * var(--space)); position: relative; s
   transform: translateX(2px);
 }
 .course b { font-family: "Cinzel", serif; font-size: var(--t-caption); letter-spacing: 0.08em; }
-.course .bar { height: 8px; background: linear-gradient(90deg, var(--accent), var(--gold-glow)); opacity: 0.7; }
+.course .bar {
+  height: 8px;
+  background: linear-gradient(90deg, var(--burgundy-deep), var(--burgundy) 75%, rgba(255, 235, 198, 0.45));
+  opacity: 1;
+}
 .course span { color: var(--ink-soft); font-size: var(--t-caption); text-align: right; }
 
 /* The Orders room: specimen column + descriptions, mirrored bays like Room V */
 .orders-room {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: var(--s-4);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.15fr);
+  gap: clamp(var(--s-1), 1.5vw, var(--s-4));
   align-items: stretch;
 }
-.orders-room .bay { display: flex; flex-direction: column; justify-content: center; }
+.orders-room .bay { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: clamp(var(--s-2), 2vw, var(--s-4)); }
+.orders-room .order-desc { min-width: 0; }
 .specimen-wrap {
   text-align: center;
   width: 100%;
 }
-.specimen { width: 100%; max-width: calc(var(--module) * 26); height: auto; margin-inline: auto; }
+.specimen { width: 100%; max-width: min(100%, calc(var(--module) * 26)); height: auto; margin-inline: auto; }
 /* Shaft + fluting share the order-driven geometry */
 .specimen .shaft, .specimen .flute-overlay {
   x: calc((200px - var(--shaft-w) * 1px) / 2);
@@ -781,13 +786,20 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
   .rhythm-colonnade { grid-template-columns: repeat(7, 1fr); }
 }
 @media (max-width: 52rem) {
-  .symmetry, .orders-room { grid-template-columns: 1fr; }
+  .symmetry { grid-template-columns: 1fr; }
   .bay.mirror { text-align: left; }
-  .axis-mark { flex-direction: row; height: var(--s-4); }
+  .symmetry .axis-mark { flex-direction: row; height: var(--s-4); }
   .tripartite { grid-template-columns: 1fr; text-align: center; }
   .chamber.center { order: -1; }
   .chamber h3 { display: inline-block; }
   .rhythm-colonnade { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 52rem) {
+  .orders-room {
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--s-4);
+  }
+  .orders-room .specimen { max-width: calc(var(--module) * 26); }
 }
 @media (max-width: 40rem) {
   .entablature nav.left, .entablature nav.right { display: none; }
@@ -795,6 +807,10 @@ html[data-order="composite"] .specimen .torus { opacity: 1; }
   .instrument { left: var(--s-2); right: var(--s-2); width: auto; bottom: var(--s-2); }
   .actions { flex-direction: column; align-items: stretch; }
   .rhythm-colonnade { grid-template-columns: repeat(3, 1fr); }
+  .orders-room .specimen { max-width: calc(var(--module) * 18); }
+  .orders-room .order-name { font-size: clamp(0.85rem, 3.5vw, 1.2rem); margin-top: var(--s-2); }
+  .orders-room .order-desc dd { font-size: clamp(0.82rem, 3.2vw, 1rem); line-height: 1.45; }
+  .orders-room .flourish { height: var(--s-3); margin-top: var(--s-2); }
 }
 </style>
 </head>
